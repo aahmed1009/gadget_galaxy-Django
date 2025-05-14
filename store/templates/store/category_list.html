@@ -1,0 +1,10 @@
+{% extends "store/index.html" %} {% block content %}
+<h1>Categories</h1>
+<ul class="list-group">
+  {% for category in categories %}
+  <li class="list-group-item">{{ category.name }}</li>
+  {% empty %}
+  <li class="list-group-item">No categories found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "store/index.html" %} {% block content %}
+<h1>Products</h1>
+<ul class="list-group">
+  {% for product in products %}
+  <li class="list-group-item">{{ product.name }} - ${{ product.price }}</li>
+  {% empty %}
+  <li class="list-group-item">No products found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
