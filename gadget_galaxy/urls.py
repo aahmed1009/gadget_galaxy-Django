@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 
 from category.views import category_list
 from product.views import product_list, product_detail, index
@@ -24,8 +24,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
-    path('products/', product_list, name='product_list'),
-    path('products/<int:product_id>/', product_detail, name='product_detail'),
-    path('categories/', category_list, name='category_list'),
+    path('', include('product.urls')),     
+    path('categories/', include('category.urls')),  # <- fix is here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
