@@ -4,9 +4,6 @@ from category.models import Category
 from .models import Product
 from django.http import HttpResponse
 # Create your views here.
-
-
-
 def index(request):
     return render(request, 'index.html')
 
