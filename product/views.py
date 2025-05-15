@@ -3,6 +3,7 @@ from product.models import Product
 from category.models import Category
 from .models import Product
 from django.http import HttpResponse
+from category.models import Category
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -16,9 +17,34 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     return render(request, 'product_detail.html', {'product': product})
 
-# Simple test views for adding and updating
+
+
 def product_new(request):
-    return HttpResponse("<h1>New Product Page</h1>")
+    categories = Category.objects.all()
+    context = {'categories': categories}
+
+    if request.method == 'POST':
+        pname = request.POST['pname']
+        description = request.POST['description']
+        price = request.POST['price']
+        stock = request.POST['stock']
+        sku = request.POST['sku']
+        category_id = request.POST['category']
+        image = request.FILES['image']
+
+
+        Product.objects.create(
+            name=pname,
+            description=description,
+            price=price,
+            stock=stock,
+            sku=sku,
+            image=image,
+            category_id=category_id
+        )
+        context['msg'] = 'Product added successfully'
+
+    return render(request, 'new_product.html', context)
 
 def product_update(request, id):
     return HttpResponse(f"<h1>Update Product Page for ID {id}</h1>")
