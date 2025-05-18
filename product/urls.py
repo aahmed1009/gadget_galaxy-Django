@@ -13,6 +13,8 @@ urlpatterns = [
     path('products/admin/', product_admin, name='product_admin'),
     path('products/<int:id>/soft-delete/', product_soft_delete, name='product_soft_delete'),
     path('products/<int:id>/hard-delete/', product_hard_delete, name='product_hard_delete'),
+    path('products/<int:id>/update/', product_update, name='product_update'),
+
 
 
   

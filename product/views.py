@@ -55,7 +55,25 @@ def product_new(request):
 
     return render(request, 'new_product.html', context)
 def product_update(request, id):
-    return HttpResponse(f"<h1>Update Product Page for ID {id}</h1>")
+    product = get_object_or_404(Product, pk=id)
+    categories = Category.objects.all()
+    
+    if request.method == 'POST':
+        data = {
+            'name': request.POST['name'],
+            'description': request.POST['description'],
+            'price': request.POST['price'],
+            'stock': request.POST['stock'],
+            'sku': request.POST['sku'],
+            'category_id': request.POST['category'],
+            'image': request.FILES.get('image')  
+        }
+        Product.update_product(id, data)
+        return redirect('product_admin')
+
+    return render(request, 'update_product.html', {'product': product, 'categories': categories})
+
+
 def soft_delete_product(request, id):
     Product.soft_delete(id)
     return redirect('product_list')

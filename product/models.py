@@ -42,3 +42,17 @@ class Product(models.Model):
     @classmethod
     def hard_delete(cls, id):
         return cls.objects.filter(pk=id).delete()
+    @classmethod
+    def update_product(cls, id, data):
+        product = cls.objects.filter(pk=id).first()
+        if product:
+            product.name = data.get('name', product.name)
+            product.description = data.get('description', product.description)
+            product.price = data.get('price', product.price)
+            product.stock = data.get('stock', product.stock)
+            product.sku = data.get('sku', product.sku)
+            product.category_id = data.get('category_id', product.category_id)
+            if data.get('image'):
+                product.image = data.get('image')
+            product.save()
+        return product
