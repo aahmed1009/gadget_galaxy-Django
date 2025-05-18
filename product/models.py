@@ -12,6 +12,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_images/', blank=True, null=True)  
     sku = models.CharField(max_length=50, unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -25,4 +26,19 @@ class Product(models.Model):
             sku=data['sku'],
             image=files['image'],
             category_id=data['category']
-        )    
+        )
+    @classmethod
+    def get_all(cls):
+        return cls.objects.filter(status=True)
+
+    @classmethod
+    def soft_delete(cls, id):
+        product = cls.objects.filter(pk=id).first()
+        if product:
+            product.status = False
+            product.save()
+        return product
+
+    @classmethod
+    def hard_delete(cls, id):
+        return cls.objects.filter(pk=id).delete()

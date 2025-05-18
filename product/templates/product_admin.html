@@ -1,0 +1,48 @@
+{% extends "index.html" %} {% block content %}
+<div class="container mt-4">
+  <h1 class="mb-4">Manage Products</h1>
+  <a href="{% url 'product_new' %}" class="btn btn-primary mb-3"
+    >Add New Product</a
+  >
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        {% if product.image %}
+        <img
+          src="{{ product.image.url }}"
+          class="card-img-top"
+          alt="{{ product.name }}"
+        />
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description|truncatechars:50 }}</p>
+          <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+          <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
+          <div class="d-flex justify-content-between">
+            <a
+              href="{% url 'product_update' product.id %}"
+              class="btn btn-sm btn-warning"
+              >Edit</a
+            >
+            <a
+              href="{% url 'product_soft_delete' product.id %}"
+              class="btn btn-sm btn-danger"
+              >Soft Delete</a
+            >
+            <a
+              href="{% url 'product_hard_delete' product.id %}"
+              class="btn btn-sm btn-danger"
+              >Hard Delete</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>No products found.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

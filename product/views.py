@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404 
+from django.shortcuts import render, get_object_or_404 ,redirect
 from product.models import Product
 from category.models import Category
 from .models import Product
@@ -56,5 +56,21 @@ def product_new(request):
     return render(request, 'new_product.html', context)
 def product_update(request, id):
     return HttpResponse(f"<h1>Update Product Page for ID {id}</h1>")
-def product_delete(request, id):
-    return HttpResponse(f"<h1>delete Product Page for ID {id}</h1>")
+def soft_delete_product(request, id):
+    Product.soft_delete(id)
+    return redirect('product_list')
+
+def hard_delete_product(request, id):
+    Product.hard_delete(id)
+    return redirect('product_list')
+def product_admin(request):
+    products = Product.get_all()
+    return render(request, 'product_admin.html', {'products': products})
+
+def product_soft_delete(request, id):
+    Product.soft_delete(id)
+    return redirect('product_admin')
+
+def product_hard_delete(request, id):
+    Product.hard_delete(id)
+    return redirect('product_admin')
