@@ -15,3 +15,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    @classmethod
+    def create_from_request(cls, data, files):
+        return cls.objects.create(
+            name=data['pname'],
+            description=data['description'],
+            price=data['price'],
+            stock=data['stock'],
+            sku=data['sku'],
+            image=files['image'],
+            category_id=data['category']
+        )    

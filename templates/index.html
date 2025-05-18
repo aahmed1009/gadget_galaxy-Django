@@ -1,25 +1,31 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Gadget Galaxy</title>
+    <title>{% block title %}Gadget Galaxy{% endblock %}</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <body class="d-flex flex-column min-vh-100">
+    <header class="bg-dark text-white p-3">
       <div class="container">
-        <a class="navbar-brand" href="/">Gadget Galaxy</a>
+        <h1>Gadget Galaxy</h1>
+        <nav>
+          <a href="/" class="text-white me-2">Home</a>
+          <a href="/products/" class="text-white me-2">Products</a>
+          <a href="/categories/" class="text-white">Categories</a>
+        </nav>
       </div>
-    </nav>
+    </header>
 
-    <div class="container mb-3">{% block nav %}{% endblock %}</div>
+    <main class="container my-4 flex-fill">
+      {% block content %}{% endblock %}
+    </main>
 
-    <div class="container">{% block content %}{% endblock %}</div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="bg-dark text-white text-center p-3 mt-auto">
+      <div class="container">&copy; 2025 Gadget Galaxy</div>
+    </footer>
   </body>
 </html>
