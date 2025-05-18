@@ -4,6 +4,7 @@ from category.models import Category
 from .models import Product
 from django.http import HttpResponse
 from category.models import Category
+from .forms import ProductForm
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -45,15 +46,26 @@ def product_detail(request, product_id):
 #         context['msg'] = 'Product added successfully'
 
 #     return render(request, 'new_product.html', context)
+# TODO:class Method
+# def product_new(request):
+#     categories = Category.objects.all()
+#     context = {'categories': categories}
+
+#     if request.method == 'POST':
+#         Product.create_from_request(request.POST, request.FILES)
+#         context['msg'] = 'Product added successfully'
+
+#     return render(request, 'new_product.html', context)
 def product_new(request):
-    categories = Category.objects.all()
-    context = {'categories': categories}
-
     if request.method == 'POST':
-        Product.create_from_request(request.POST, request.FILES)
-        context['msg'] = 'Product added successfully'
-
-    return render(request, 'new_product.html', context)
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_admin')
+    else:
+        form = ProductForm()
+    
+    return render(request, 'new_product.html', {'form': form})
 def product_update(request, id):
     product = get_object_or_404(Product, pk=id)
     categories = Category.objects.all()

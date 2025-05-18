@@ -1,5 +1,17 @@
 {% extends "index.html" %} {% block content %}
 <div class="container mt-4">
+  <h1>Add New Product</h1>
+  <form
+    method="post"
+    enctype="multipart/form-data"
+    class="border p-4 rounded shadow-sm bg-light"
+  >
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Product</button>
+  </form>
+</div>
+{% endblock %} {% comment %} {% extends "index.html" %} {% block content %}
+<div class="container mt-4">
   <h1 class="mb-4">Add New Product</h1>
 
   {% if msg %}
@@ -80,4 +92,4 @@
     <button type="submit" class="btn btn-primary">Add Product</button>
   </form>
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
