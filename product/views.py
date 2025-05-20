@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404 ,redirect
-from product.models import Product
+# from product.models import Product
 from category.models import Category
 from .models import Product
 from django.http import HttpResponse
@@ -7,6 +7,7 @@ from category.models import Category
 from .forms import ProductForm
 from django.views.generic import ListView
 from django.views import View
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -108,8 +109,15 @@ def product_hard_delete(request, id):
     return redirect('product_admin')
 class ProductListView(ListView):
     model = Product
-    template_name = 'product/product_list.html'
+    template_name = 'product_list.html'
     context_object_name = 'products'
 
     def get_queryset(self):
         return Product.objects.filter(status=True)
+class ProductSoftDeleteView(View):
+    def post(self, request, pk):
+        print("POST delete called for ID:", pk)
+        product = get_object_or_404(Product, pk=pk)
+        product.status = False
+        product.save()
+        return redirect('product_list')
