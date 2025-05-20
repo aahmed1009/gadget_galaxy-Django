@@ -5,6 +5,8 @@ from .models import Product
 from django.http import HttpResponse
 from category.models import Category
 from .forms import ProductForm
+from django.views.generic import ListView
+from django.views import View
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -104,3 +106,10 @@ def product_soft_delete(request, id):
 def product_hard_delete(request, id):
     Product.hard_delete(id)
     return redirect('product_admin')
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product/product_list.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(status=True)

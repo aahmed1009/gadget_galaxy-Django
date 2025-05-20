@@ -1,10 +1,15 @@
 {% extends "index.html" %} {% block content %}
-<h1>Products</h1>
-<ul class="list-group">
+<div class="container mt-4">
+  <h2>Product List</h2>
   {% for product in products %}
-  <li class="list-group-item">{{ product.name }} - ${{ product.price }}</li>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5>{{ product.name }}</h5>
+      <p>{{ product.description}}</p>
+    </div>
+  </div>
   {% empty %}
-  <li class="list-group-item">No products found.</li>
+  <p>No products found.</p>
   {% endfor %}
-</ul>
+</div>
 {% endblock %}
