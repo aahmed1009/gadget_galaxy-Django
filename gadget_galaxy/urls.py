@@ -21,10 +21,17 @@ from django.urls import path,include
 from product.views import product_list, product_detail, index
 from django.conf import settings
 from django.conf.urls.static import static
-
+from user.views import register, activate
+from django.contrib.auth import views as auth_views
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('product.urls')),     
-path('categories/', include('category.urls')),
+#     path('admin/', admin.site.urls),
+#     path('', include('product.urls')),     
+# path('categories/', include('category.urls')),
+  path('admin/', admin.site.urls),
+    path('register/', register, name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('activate/<uidb64>/<token>/', activate, name='activate'),
+    path('categories/', include('category.urls')),
  
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

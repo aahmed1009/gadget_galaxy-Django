@@ -41,6 +41,9 @@ INSTALLED_APPS = [
 
         'category',   
     'product',    
+        'user',
+ 
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +138,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+# Celery + Redis
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+
+# Email (console backend for dev)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@example.com'
