@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
-from category.views import category_list
+# from category.views import category_list
 from product.views import product_list, product_detail, index
 from django.conf import settings
 from django.conf.urls.static import static

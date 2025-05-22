@@ -1,0 +1,9 @@
+{% extends 'index.html' %} {% block content %}
+<div class="container mt-4">
+  <h2>Category Detail</h2>
+  <p><strong>Name:</strong> {{ category.name }}</p>
+  <a href="{% url 'category_list' %}" class="btn btn-secondary mt-2"
+    >Back to list</a
+  >
+</div>
+{% endblock %}
