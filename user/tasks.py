@@ -1,9 +1,19 @@
-from celery import shared_task
 from django.core.mail import send_mail
+
+from django.conf import settings
+
+from django.template.loader import render_to_string
+
+from celery import shared_task
+
 
 @shared_task
 def send_verification_email(email, uid, token):
-    link = f"http://127.0.0.1:8000/activate/{uid}/{token}/"
-    subject = "Activate Your Account"
-    message = f"Click this link to activate your account:\n{link}"
-    send_mail(subject, message, 'noreply@example.com', [email])
+    subject = 'Activate your account'
+    activation_link = f'http://127.0.0.1:8000/activate/{uid}/{token}/'
+
+    message = render_to_string('activation_email.html', {
+        'activation_link': activation_link
+    })
+
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
