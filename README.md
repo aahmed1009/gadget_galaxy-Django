@@ -48,7 +48,7 @@ Gadget Galaxy is a Django-based web application that provides complete CRUD func
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/gadget_galaxy.git
+git clone git@github.com:aahmed1009/gadget_galaxy-Django.git
 cd gadget_galaxy
 ```
 
@@ -59,16 +59,27 @@ python -m venv venv
 source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 ```
 
-### 3. Install dependencies
 
-```bash
-pip install -r requirements.txt
-```
 
-### 4. Configure your `.env` or `settings.py`
+### 3. Configure your `.env` or `settings.py`
 
 Update email backend and credentials for Gmail or SMTP service.
+```python
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Set in your .env file
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # App password from Gmail
+```
 
+> 📧 If you're using Gmail:
+>
+> 1. Enable **2-Step Verification**.
+> 2. Go to **Google Account > Security > App passwords**.
+> 3. Generate a new app password and use it as `EMAIL_HOST_PASSWORD`.
+> 4. Store your credentials safely in a `.env` file.
 ### 5. Setup Redis (required for Celery)
 
 ```bash
@@ -76,19 +87,19 @@ sudo apt update && sudo apt install redis-server
 sudo service redis-server start
 ```
 
-### 6. Apply migrations
+### 4. Apply migrations
 
 ```bash
 python manage.py migrate
 ```
 
-### 7. Start Celery worker
+### 5. Start Celery worker
 
 ```bash
 celery -A gadget_galaxy worker -l info
 ```
 
-### 8. Run the development server
+### 6. Run the development server
 
 ```bash
 python manage.py runserver
@@ -113,10 +124,5 @@ gadget_galaxy/
 
 ## Author
 
-Developed by Alaa - [3la2.a7med60@gmail.com](mailto:3la2.a7med60@gmail.com)
+Developed by Alaa - [alaa.ahmedgamal10@gmail.com](mailto:alaa.ahmedgamal10@gmail.com)
 
----
-
-## License
-
-MIT License
